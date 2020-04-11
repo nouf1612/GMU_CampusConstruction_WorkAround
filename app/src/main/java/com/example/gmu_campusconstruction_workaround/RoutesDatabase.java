@@ -1,12 +1,21 @@
 package com.example.gmu_campusconstruction_workaround;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
 public class RoutesDatabase extends SQLiteOpenHelper {
+    public static final String DATABASE_NAME = "Route.db";
+    public static final String TABLE_NAME = "route_table";
+    public static final String COL_1 = "ID";
+    public static final String COL_2 = "BUILDINGS";
+    public static final String COL_3 = "ROUTE";
+//    public static final String COL_4 = "Route.db";
+//    public static final String COL_5 = "Route.db";
     /**
      * Create a helper object to create, open, and/or manage a database.
      * This method always returns very quickly.  The database is not actually
@@ -14,14 +23,9 @@ public class RoutesDatabase extends SQLiteOpenHelper {
      * {@link #getReadableDatabase} is called.
      *
      * @param context to use for locating paths to the the database
-     * @param name    of the database file, or null for an in-memory database
-     * @param factory to use for creating cursor objects, or null for the default
-     * @param version number of the database (starting at 1); if the database is older,
-     *                {@link #onUpgrade} will be used to upgrade the database; if the database is
-     *                newer, {@link #onDowngrade} will be used to downgrade the database
      */
-    public RoutesDatabase(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public RoutesDatabase(@Nullable Context context) {
+        super(context, DATABASE_NAME, null, 1);
     }
 
     /**
@@ -32,7 +36,7 @@ public class RoutesDatabase extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL("create table " + TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, BUILDING TEXT, ROUTE TEXT)");
     }
 
     /**
@@ -57,6 +61,35 @@ public class RoutesDatabase extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+    }
 
+    public boolean insertData(String buildings, String route) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2, buildings);
+        contentValues.put(COL_3, route);
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        if(result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public Cursor getAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
+        return res;
+    }
+
+    public boolean updateData(String id, String buildings, String route) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1, id);
+        contentValues.put(COL_2, buildings);
+        contentValues.put(COL_3, route);
+        db.update(TABLE_NAME, contentValues, "ID = ?", new String[] { id });
+        return true;
     }
 }
