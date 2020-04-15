@@ -1,6 +1,7 @@
 package com.example.gmu_campusconstruction_workaround;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -13,17 +14,18 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    RoutesDatabase routeDb;
-    EditText editBuildings, editRoute, editID;
-    Button btnAddData;
-    Button btnViewAll;
-    Button btnUpdate;
+    private RoutesDatabase routeDb;
+    private Button buttonDatabase;
+    private Button buttonRoute;
+    private Button btnViewTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        routeDb = new RoutesDatabase(this);
-
-        editBuildings = (EditText)findViewById(R.id.editText_Buildings);
-        editRoute = (EditText)findViewById(R.id.editText_Route);
-        editID = (EditText)findViewById(R.id.editText_ID);
-        btnAddData = (Button)findViewById(R.id.button_Add);
-        btnViewAll = (Button)findViewById(R.id.button_View);
-        btnUpdate = (Button)findViewById(R.id.button_Update);
-        AddData();
-        viewAll();
-        UpdateData();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,45 +42,93 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        routeDb = new RoutesDatabase(this);
+
+        buttonDatabase = (Button) findViewById(R.id.button_Database);
+        btnViewTest = (Button) findViewById(R.id.button_ViewTest);
+
+        viewAll();
+
+        buttonDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDatabaseConfig();
+            }
+        });
+
+        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Building1);
+        Spinner spinner2 = (Spinner) findViewById(R.id.spinner_Building2);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.names));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(myAdapter);
+        spinner2.setAdapter(myAdapter);
+
+        buttonRoute = (Button)findViewById(R.id.button_Route);
+        viewRoute();
     }
 
-    public void UpdateData() {
-        btnUpdate.setOnClickListener(
+    public void openDatabaseConfig() {
+        Intent intent = new Intent(this, DatabaseActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void viewRoute() {
+        buttonRoute.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean isUpdate = routeDb.updateData(editID.getText().toString(),
-                                editBuildings.getText().toString(),
-                                editRoute.getText().toString());
-                        if(isUpdate == true) {
-                            Toast.makeText(MainActivity.this, "Data Updated", Toast.LENGTH_LONG).show();
-                        }
-                        else{
-                            Toast.makeText(MainActivity.this, "Data not Updated", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }
-        );
-    }
+                        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Building1);
+                        String building1 = spinner1.getSelectedItem().toString();
+                        Spinner spinner2 = (Spinner) findViewById(R.id.spinner_Building2);
+                        String building2 = spinner2.getSelectedItem().toString();
+                        final String building = building1 + ", " + building2;
 
-    public void AddData() {
-        btnAddData.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isInserted = routeDb.insertData(editBuildings.getText().toString(),
-                                editRoute.getText().toString());
-                        if(isInserted == true)
-                            Toast.makeText(MainActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(MainActivity.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        Cursor res = routeDb.getAllData();
+                        String route = "none";
+                        if(res.getCount() == 0) {
+                            //show error message
+                            showMessage("Error", "Nothing found");
+                        }
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()) {
+                            if(res.getString(1).equals(building)) {
+                                buffer.append(res.getString(2) + "\n");
+                            }
+                        }
+                        //show table
+                        //showMessage("Data", building);
+                        showMessage("Here! Follow this route.", buffer.toString());
                     }
                 }
         );
     }
 
     public void viewAll() {
-        btnViewAll.setOnClickListener(
+        btnViewTest.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -119,27 +157,5 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(Message);
         builder.show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
