@@ -14,8 +14,6 @@ public class RoutesDatabase extends SQLiteOpenHelper {
     public static final String COL_1 = "ID";
     public static final String COL_2 = "BUILDINGS";
     public static final String COL_3 = "ROUTE";
-//    public static final String COL_4 = "Route.db";
-//    public static final String COL_5 = "Route.db";
     /**
      * Create a helper object to create, open, and/or manage a database.
      * This method always returns very quickly.  The database is not actually

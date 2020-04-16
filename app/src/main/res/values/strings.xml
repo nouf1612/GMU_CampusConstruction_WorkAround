@@ -11,8 +11,27 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string-array name="names">
-        <item>Enterprise Hall</item>
         <item>Johnson Center</item>
         <item>Aquia Building</item>
+        <item>Art and Design Building</item>
+        <item>Exploratory Hall</item>
+        <item>Innovation Hall</item>
+        <item>Exploratory Hall</item>
+        <item>Robinson Hall B</item>
+        <item>Nguyen Engineering Building</item>
+        <item>Research Hall</item>
+        <item>SUB 1</item>
+        <item>Enterprise Hall</item>
+        <item>Thompson Hall</item>
+        <item>Planetary Hall</item>
+        <item>David King Hall</item>
+        <item>West Building</item>
+        <item>Mason Hall</item>
+        <item>Music/Theater Building</item>
+        <item>East Building</item>
+        <item>Krug Hall</item>
+        <item>Research Hall</item>
+        <item>Lecture Hall</item>
+        <item>The HUB</item>
     </string-array>
 </resources>

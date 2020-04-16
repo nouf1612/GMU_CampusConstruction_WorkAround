@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         spinner1.setAdapter(myAdapter);
         spinner2.setAdapter(myAdapter);
 
-        buttonRoute = (Button)findViewById(R.id.button_Route);
+        buttonRoute = (Button) findViewById(R.id.button_Route);
         viewRoute();
     }
 
@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         //show table
-                        //showMessage("Data", building);
                         showMessage("Here! Follow this route.", buffer.toString());
                     }
                 }
