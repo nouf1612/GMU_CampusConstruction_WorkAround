@@ -9,9 +9,11 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
+    <!-- names for Buttons and spinners-->
     <string name="Quick_Route">Quick Route</string>
     <string name="schedule_route">Schedule Route</string>
+    <string name="Start_Building">Start Building</string>
+    <string name="Destination_Building">Destination</string>
 
     <string-array name="names">
         <item>Aquia Building</item>
@@ -45,7 +47,6 @@
         <item>Enterprise Hall</item>
         <item>Exploratory Hall</item>
         <item>Innovation Hall</item>
-        <item>Johnson Center</item>
         <item>Krug Hall</item>
         <item>Lecture Hall</item>
         <item>Mason Hall</item>
@@ -55,8 +56,55 @@
         <item>Research Hall</item>
         <item>Robinson Hall B</item>
         <item>SUB 1</item>
-        <item>The HUB</item>
         <item>Thompson Hall</item>
         <item>West Building</item>
     </string-array>
+
+    <!--the list for the upper part of campus-->
+    <string-array name="Upper_Part">
+        <item>Aquia Building</item>
+        <item>East Building</item>
+        <item>Krug Hall</item>
+        <item>Lecture Hall</item>
+        <item>Robinson Hall B</item>
+        <item>SUB 1</item>
+        <item>Thompson Hall</item>
+        <item>West Building</item>
+    </string-array>
+
+    <!--the list for the lower part of campus-->
+    <string-array name="Lower_Part">
+        <item>Art and Design Building</item>
+        <item>Enterprise Hall</item>
+        <item>Innovation Hall</item>
+        <item>Nguyen Engineering Building</item>
+        <item>Research Hall</item>
+    </string-array>
+
+    <!--the list for the middle part of campus-->
+    <string-array name="Middle_Part">
+        <item>College Hall</item>
+        <item>David King Hall</item>
+        <item>Exploratory Hall</item>
+        <item>Mason Hall</item>
+        <item>Music/Theater Building</item>
+        <item>Planetary Hall</item>
+    </string-array>
+
+    <!--Destination array for the upper part of campus-->
+    <string-array name="UP_Dest">
+        <item>Art and Design Building</item>
+        <item>College Hall</item>
+        <item>David King Hall</item>
+        <item>Enterprise Hall</item>
+        <item>Exploratory Hall</item>
+        <item>Innovation Hall</item>
+        <item>Mason Hall</item>
+        <item>Music/Theater Building</item>
+        <item>Nguyen Engineering Building</item>
+        <item>Planetary Hall</item>
+        <item>Research Hall</item>
+    </string-array>
+
+
 </resources>
