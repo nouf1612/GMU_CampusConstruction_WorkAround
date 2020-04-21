@@ -47,5 +47,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * configure the button that will transition
+     * to the Schedule Route activity
+     */
+    private void ConfigureSRButton() {
+        Button SRButton = (Button) findViewById(R.id.button_GoToSR);
+        SRButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Quick_Route.class));
+            }
+        });
+    }
 }

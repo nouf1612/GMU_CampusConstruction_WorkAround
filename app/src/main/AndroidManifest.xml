@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Quick_Route"></activity>
+        <activity android:name=".Schedule_Route"></activity>
+        <activity android:name=".Quick_Route" />
         <activity android:name=".DatabaseActivity" />
         <activity
             android:name=".MainActivity"

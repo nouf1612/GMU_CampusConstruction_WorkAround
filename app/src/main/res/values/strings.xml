@@ -11,6 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="Quick_Route">Quick Route</string>
+    <string name="schedule_route">Schedule Route</string>
 
     <string-array name="names">
         <item>Aquia Building</item>
@@ -35,7 +36,7 @@
         <item>West Building</item>
     </string-array>
 
-    <!the the list for the Start Spinner>
+    <!--the the list for the Start Spinner-->
     <string-array name="Start_Buildings">
         <item>Aquia Building</item>
         <item>Art and Design Building</item>
