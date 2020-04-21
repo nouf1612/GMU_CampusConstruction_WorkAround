@@ -17,10 +17,10 @@ import android.widget.Spinner;
 public class Quick_Route extends AppCompatActivity {
 
     //variables for the route database, list spinners and their adapters,
-    // and the MainActivity button
+    // and the get Route and MainActivity buttons
     private RoutesDatabase routeDb;
     private Spinner spinner_SB, spinner_DB;
-    private Button MAButton;
+    private Button GRButton,MAButton;
     private String[] UP, LP, MP;
     private String Building_1,Building_2;
     private ArrayAdapter<String> SB_adapter,DB_adapter;
@@ -74,10 +74,7 @@ public class Quick_Route extends AppCompatActivity {
                     showMessage("Error", "Nothing found");
                     }
                 Building_1 = User_Choice;
-                //TEST IF THIS SHOWS THE RIGHT LIST OR NOT THEN FIX THE CHOICE FOR BUILDING_2
-
-
-            }
+                }
 
 
             @Override
@@ -85,6 +82,21 @@ public class Quick_Route extends AppCompatActivity {
 
             }
         });
+
+        // get the users destination choice
+        spinner_DB.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Building_2 = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        ConfigureGRButton();
     }
 
 
@@ -93,11 +105,24 @@ public class Quick_Route extends AppCompatActivity {
      * back to Main activity
      */
     private void ConfigureMAButton() {
-        Button MAButton = (Button) findViewById(R.id.button_GoToMA);
+        MAButton = (Button) findViewById(R.id.button_GoToMA);
         MAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+    }
+
+    /**
+     * configure the get route button
+     */
+    private void ConfigureGRButton(){
+        GRButton = (Button) findViewById((R.id.button_GetRoute));
+        GRButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //viewRoute();
             }
         });
     }

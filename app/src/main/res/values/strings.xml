@@ -18,6 +18,8 @@
     <string name="Add_Favorite">Add to Favorites</string>
     <string name="Start_Building">Start Building</string>
     <string name="Destination_Building">Destination</string>
+    <string name="Get_Route">Get Route</string>
+
 
     <string-array name="names">
         <item>Aquia Building</item>
