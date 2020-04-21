@@ -15,11 +15,25 @@
         android:layout_marginBottom="23dp"
         android:text="@string/Quick_Route"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button_GoToMA"
+        app:layout_constraintBottom_toTopOf="@+id/button_AddToFav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_Dest_Building"
         tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/button_AddToFav"
+        android:layout_width="148dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="23dp"
+        android:text="@string/Add_Favorite"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/button_GoToMA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_route"
+        tools:visibility="visible" />
+
 
     <Spinner
         android:id="@+id/spinner_Start_Building"
@@ -96,7 +110,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_route"
+        app:layout_constraintTop_toBottomOf="@+id/button_AddToFav"
         tools:visibility="visible" />
 
 
