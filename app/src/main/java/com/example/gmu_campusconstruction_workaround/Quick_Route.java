@@ -20,7 +20,7 @@ public class Quick_Route extends AppCompatActivity {
     // and the get Route and MainActivity buttons
     private RoutesDatabase routeDb;
     private Spinner spinner_SB, spinner_DB;
-    private Button GRButton,MAButton;
+    private Button GRButton,MAButton, buttonRoute;
     private String[] UP, LP, MP;
     private String Building_1,Building_2;
     private ArrayAdapter<String> SB_adapter,DB_adapter;
@@ -30,6 +30,7 @@ public class Quick_Route extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick__route);
 
+        routeDb = new RoutesDatabase(this);
         ConfigureMAButton();
 
 
@@ -97,6 +98,11 @@ public class Quick_Route extends AppCompatActivity {
         });
 
         ConfigureGRButton();
+
+        //KEVIN EDITS
+        buttonRoute = (Button) findViewById(R.id.button_GetRoute);
+        viewRoute();
+        //
     }
 
 
@@ -192,8 +198,38 @@ public class Quick_Route extends AppCompatActivity {
      * NOT DONE NEEDS EDITING
      * @param Building_1
      * @param Building_2
-     *//*
-    public void viewRoute(String Building_1, String Building_2) {
+     */
+
+    public void viewRoute() {
+        buttonRoute.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Start_Building);
+                        String building1 = spinner1.getSelectedItem().toString();
+                        Spinner spinner2 = (Spinner) findViewById(R.id.spinner_Dest_Building);
+                        String building2 = spinner2.getSelectedItem().toString();
+                        final String building = building1 + ", " + building2;
+
+                        Cursor res = routeDb.getAllData();
+                        if(res.getCount() == 0) {
+                            //show error message
+                            showMessage("Error", "Nothing found");
+                        }
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()) {
+                            if(res.getString(1).equals(building)) {
+                                buffer.append(res.getString(2) + "\n");
+                            }
+                        }
+                        //show table
+                        showMessage("Here! Follow this route.", buffer.toString());
+                    }
+                }
+        );
+    }
+
+/*    public void viewRoute(String Building_1, String Building_2) {
         Cursor res = routeDb.getAllData();
         String route = "none";
         if(res.getCount() == 0) {
