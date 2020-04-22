@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context=".Favorite_List"
+    tools:visibility="visible">
+
+    <TextView
+        android:id="@+id/favTitle"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center|center_horizontal"
+        android:text="@string/Favorite_List"
+        app:layout_constraintBottom_toTopOf="@id/favTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/favTextView"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center|fill_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="52dp"
+        android:text="Route JC -> Enterprise (TEST)"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_RemoveFav"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center|end"
+        android:text="@string/Delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.982"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/favTitle"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button_GoToMA"
+        android:layout_width="148dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/previous"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favTitle"
+        app:layout_constraintVertical_bias="0.873"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

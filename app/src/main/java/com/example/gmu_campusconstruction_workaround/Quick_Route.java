@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,10 +18,18 @@ import android.widget.Spinner;
 public class Quick_Route extends AppCompatActivity {
 
     //variables for the route database, list spinners and their adapters,
-    // and the MainActivity button
+    // and the get Route and MainActivity buttons
     private RoutesDatabase routeDb;
     private Spinner spinner_SB, spinner_DB;
+<<<<<<< HEAD
     private Button MAButton;
+
+    //Added new button for Quick Route (KEVIN)
+    private Button routeButton;
+
+=======
+    private Button GRButton,MAButton;
+>>>>>>> d6bb1a6146d5d262fbf753b87fa936fe97f70080
     private String[] UP, LP, MP;
     private String Building_1,Building_2;
     private ArrayAdapter<String> SB_adapter,DB_adapter;
@@ -30,8 +39,10 @@ public class Quick_Route extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick__route);
 
-        ConfigureMAButton();
+        //Need to make sure routeDb is initialized!
+        routeDb = new RoutesDatabase(this);
 
+        ConfigureMAButton();
 
         // spinners for the start and destination lists
         spinner_SB = (Spinner) findViewById(R.id.spinner_Start_Building);
@@ -41,6 +52,15 @@ public class Quick_Route extends AppCompatActivity {
                 getResources().getStringArray(R.array.Start_Buildings));
         spinner_SB.setAdapter(SB_adapter);
 
+        //FOR TESTING!!! (KEVIN)______________________________________
+        DB_adapter = new ArrayAdapter<String>(Quick_Route.this,
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.Start_Buildings));
+        spinner_DB.setAdapter(DB_adapter);
+
+        routeButton = (Button) findViewById(R.id.button_QuickRoute);
+        viewRoute();
+        //____________________________________________________________
 
         // Destination spinner conditions
         //Set arrays for comparison
@@ -74,10 +94,7 @@ public class Quick_Route extends AppCompatActivity {
                     showMessage("Error", "Nothing found");
                     }
                 Building_1 = User_Choice;
-                //TEST IF THIS SHOWS THE RIGHT LIST OR NOT THEN FIX THE CHOICE FOR BUILDING_2
-
-
-            }
+                }
 
 
             @Override
@@ -85,6 +102,21 @@ public class Quick_Route extends AppCompatActivity {
 
             }
         });
+
+        // get the users destination choice
+        spinner_DB.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Building_2 = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        ConfigureGRButton();
     }
 
 
@@ -93,11 +125,28 @@ public class Quick_Route extends AppCompatActivity {
      * back to Main activity
      */
     private void ConfigureMAButton() {
-        Button MAButton = (Button) findViewById(R.id.button_GoToMA);
+        MAButton = (Button) findViewById(R.id.button_GoToMA);
+<<<<<<< HEAD
+        MAButton.setOnClickListener(new OnClickListener() {
+=======
         MAButton.setOnClickListener(new View.OnClickListener() {
+>>>>>>> d6bb1a6146d5d262fbf753b87fa936fe97f70080
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+    }
+
+    /**
+     * configure the get route button
+     */
+    private void ConfigureGRButton(){
+        GRButton = (Button) findViewById((R.id.button_GetRoute));
+        GRButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //viewRoute();
             }
         });
     }
@@ -150,6 +199,41 @@ public class Quick_Route extends AppCompatActivity {
         return list_num;
     }
 
+    public void viewRoute() {
+        routeButton.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Start_Building);
+                        String building1 = spinner1.getSelectedItem().toString();
+                        Spinner spinner2 = (Spinner) findViewById(R.id.spinner_Dest_Building);
+                        String building2 = spinner2.getSelectedItem().toString();
+                        final String building = building1 + ", " + building2;
+
+                        Cursor res = routeDb.getAllData();
+                        //String route = "none";
+                        if(res.getCount() == 0) {
+                            //show error message
+                            showMessage("Error", "Nothing found");
+                        }
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()) {
+                            if(res.getString(1).equals(building)) {
+                                buffer.append(res.getString(2) + "\n");
+                            }
+                        }
+                        //show table
+                        if (building1.equals(building2)){
+                            showMessage("Error", "You're already at your destination!");
+                        }
+                        else {
+                            showMessage("Here! Follow this route.", buffer.toString());
+                        }
+                    }
+                }
+        );
+    }
+
     /**
      *
      * @param title
@@ -167,8 +251,9 @@ public class Quick_Route extends AppCompatActivity {
      * NOT DONE NEEDS EDITING
      * @param Building_1
      * @param Building_2
-     *//*
-    public void viewRoute(String Building_1, String Building_2) {
+     */
+
+    /*public void viewRoute(String Building_1, String Building_2) {
         Cursor res = routeDb.getAllData();
         String route = "none";
         if(res.getCount() == 0) {
@@ -183,8 +268,8 @@ public class Quick_Route extends AppCompatActivity {
             }
             //show table
             showMessage("Here! Follow this route.", buffer.toString());
-        }*/
-
+        }
+*/
 
 
 }

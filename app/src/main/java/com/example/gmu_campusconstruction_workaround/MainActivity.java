@@ -30,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ConfigureQRButton();
+<<<<<<< HEAD
+        ConfigureSRButton();
+=======
+        ConfigureFLButton();
+>>>>>>> d6bb1a6146d5d262fbf753b87fa936fe97f70080
 
     }
 
@@ -56,7 +61,21 @@ public class MainActivity extends AppCompatActivity {
         SRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, Quick_Route.class));
+                startActivity(new Intent(MainActivity.this, Schedule_Route.class));
+            }
+        });
+    }
+
+    /**
+     * configure the button that will transition
+     * to the Favorite List activity
+     */
+    private void ConfigureFLButton() {
+        Button QRButton = (Button) findViewById(R.id.button_GoToFL);
+        QRButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Favorite_List.class));
             }
         });
     }

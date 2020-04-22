@@ -8,37 +8,72 @@
     tools:context=".Quick_Route"
     tools:visibility="visible">
 
+
+    <!--dependent spinner-->
+
     <Button
-        android:id="@+id/button_route"
+<<<<<<< HEAD
+        android:id="@+id/button_QuickRoute"
         android:layout_width="148dp"
         android:layout_height="50dp"
         android:layout_marginBottom="23dp"
         android:text="@string/Quick_Route"
+=======
+        android:id="@+id/button_AddToFav"
+        android:layout_width="145dp"
+        android:layout_height="58dp"
+        android:layout_marginBottom="184dp"
+        android:text="@string/Add_Favorite"
+>>>>>>> d6bb1a6146d5d262fbf753b87fa936fe97f70080
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button_GoToMA"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
+        app:layout_constraintHorizontal_bias="0.501"
+=======
+        app:layout_constraintHorizontal_bias="0.484"
+>>>>>>> d6bb1a6146d5d262fbf753b87fa936fe97f70080
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_Dest_Building"
         tools:visibility="visible" />
 
     <Spinner
         android:id="@+id/spinner_Start_Building"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
         android:layout_marginBottom="73dp"
+=======
+        android:layout_marginTop="142dp"
+        android:layout_marginBottom="248dp"
         android:entries="@array/Start_Buildings"
+>>>>>>> d6bb1a6146d5d262fbf753b87fa936fe97f70080
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/button_GetRoute"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
-    <!--dependent spinner-->
+    <Button
+        android:id="@+id/button_GoToMA"
+        android:layout_width="147dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="92dp"
+        android:text="@string/previous"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/button_AddToFav"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/button_AddToFav"
+        app:layout_constraintTop_toBottomOf="@+id/button_AddToFav"
+        app:layout_constraintVertical_bias="0.562"
+        tools:visibility="visible" />
+
     <Spinner
         android:id="@+id/spinner_Dest_Building"
         android:layout_width="0dp"
@@ -47,56 +82,73 @@
         android:layout_marginLeft="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
-        android:layout_marginBottom="166dp"
+        android:layout_marginBottom="107dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button_route"
+<<<<<<< HEAD
+        app:layout_constraintBottom_toTopOf="@+id/button_QuickRoute"
+=======
+        app:layout_constraintBottom_toTopOf="@+id/button_GetRoute"
+>>>>>>> d6bb1a6146d5d262fbf753b87fa936fe97f70080
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:visibility="visible" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="103dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginBottom="21dp"
-        android:text="@string/Start_Building"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_Start_Building"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="103dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginRight="14dp"
-        android:layout_marginBottom="29dp"
-        android:text="@string/Destination_Building"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_Dest_Building"
-        app:layout_constraintEnd_toStartOf="@+id/button_route"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/spinner_Dest_Building"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_Start_Building" />
-
     <Button
-        android:id="@+id/button_GoToMA"
-        android:layout_width="148dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="69dp"
-        android:text="@string/previous"
+        android:id="@+id/button_GetRoute"
+        android:layout_width="146dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="261dp"
+        android:text="@string/Get_Route"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_route"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_Start_Building"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/Destination_Building"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_Dest_Building"
+<<<<<<< HEAD
+        app:layout_constraintEnd_toStartOf="@+id/button_QuickRoute"
+=======
+        app:layout_constraintEnd_toStartOf="@+id/button_GetRoute"
+>>>>>>> d6bb1a6146d5d262fbf753b87fa936fe97f70080
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/spinner_Dest_Building"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_Start_Building" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="101dp"
+        android:layout_marginBottom="12dp"
+        android:text="@string/Start_Building"
+        android:visibility="visible"
+<<<<<<< HEAD
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_QuickRoute"
+=======
+        app:layout_constraintBottom_toTopOf="@+id/spinner_Start_Building"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+>>>>>>> d6bb1a6146d5d262fbf753b87fa936fe97f70080
         tools:visibility="visible" />
 
 
