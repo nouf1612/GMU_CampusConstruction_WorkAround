@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ConfigureQRButton();
+        ConfigureSRButton();
         ConfigureFLButton();
 
     }
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         SRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, Quick_Route.class));
+                startActivity(new Intent(MainActivity.this, Schedule_Route.class));
             }
         });
     }
@@ -75,4 +76,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

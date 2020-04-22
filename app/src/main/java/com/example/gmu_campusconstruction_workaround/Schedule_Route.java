@@ -2,41 +2,325 @@ package com.example.gmu_campusconstruction_workaround;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.renderscript.ScriptC;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class Schedule_Route extends AppCompatActivity {
+    private RoutesDatabase routeDb;
+    private SundayDatabase sundayDb;
+    private MondayDatabase mondayDb;
+    private TuesdayDatabase tuesdayDb;
+    private WednesdayDatabase wednesdayDb;
+    private ThursdayDatabase thursdayDb;
+    private FridayDatabase fridayDb;
+    private SaturdayDatabase saturdayDb;
+    private Button btnAddDay;
+    private Button btnViewDay;
+    private Button btnDelete;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule__route);
 
-        //ConfigureMAButton();
-
+        //Day Databases
+        sundayDb = new SundayDatabase(this);
+        mondayDb = new MondayDatabase(this);
+        tuesdayDb = new TuesdayDatabase(this);
+        wednesdayDb = new WednesdayDatabase(this);
+        thursdayDb = new ThursdayDatabase(this);
+        fridayDb = new FridayDatabase(this);
+        saturdayDb = new SaturdayDatabase(this);
+        routeDb = new RoutesDatabase(this);
 
         // Layout for main screen
-        Spinner Spinner_SB = (Spinner) findViewById(R.id.spinner_Start_Building);
-        Spinner Spinner_DB = (Spinner) findViewById(R.id.spinner_Dest_Building);
-        ArrayAdapter<String> SB_adapter;
+        Spinner spinner_SB = (Spinner) findViewById(R.id.spinner_Start_Building2);
+        Spinner spinner_DB = (Spinner) findViewById(R.id.spinner_Dest_Building2);
+        Spinner spinner_Days = (Spinner) findViewById(R.id.spinner_Days);
+        ArrayAdapter<String> SB_adapter = new ArrayAdapter<String>(Schedule_Route.this,
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.Start_Buildings));
+        spinner_SB.setAdapter(SB_adapter);
+        ArrayAdapter<String> DB_adapter = new ArrayAdapter<String>(Schedule_Route.this,
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.Start_Buildings));
+        spinner_DB.setAdapter(DB_adapter);
+        ArrayAdapter<String> DAYS_adapter = new ArrayAdapter<String>(Schedule_Route.this,
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.Days));
+        spinner_Days.setAdapter(DAYS_adapter);
+
+        btnAddDay = (Button) findViewById(R.id.button_AddDay);
+        btnViewDay = (Button) findViewById(R.id.button_ViewDay);
+        btnDelete = (Button) findViewById(R.id.button_DeleteDay);
+
+        //Calling methods
+        ConfigureMAButton();
+        AddData();
+        DeleteData();
+        viewDay();
     }
 
 
 
-/*    *//**
+    /**
      * configure the button that will transition
      * back to Main activity
-     *//*
+     */
     private void ConfigureMAButton() {
-        Button MAButton = (Button) findViewById(R.id.button_GoToMA);
+        Button MAButton = (Button) findViewById(R.id.button_Back);
         MAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-    }*/
+    }
+
+    public void DeleteData() {
+        btnDelete.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Start_Building2);
+                        String b1 = spinner1.getSelectedItem().toString();
+                        Spinner spinner2 = (Spinner) findViewById(R.id.spinner_Dest_Building2);
+                        String b2 = spinner2.getSelectedItem().toString();
+                        Spinner spinner3 = (Spinner) findViewById(R.id.spinner_Days);
+                        String day = spinner3.getSelectedItem().toString();
+                        final String building = b1 + ", " + b2;
+
+                        if (day.equals("Sunday")){
+                            boolean isDelete = sundayDb.deleteBuilding(building);
+                            if(isDelete == true) {
+                                Toast.makeText(Schedule_Route.this, "Route Deleted", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(Schedule_Route.this, "Route not Deleted", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else if(day.equals("Monday")){
+                            boolean isDelete = mondayDb.deleteBuilding(building);
+                            if(isDelete == true) {
+                                Toast.makeText(Schedule_Route.this, "Route Deleted", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(Schedule_Route.this, "Route not Deleted", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else if(day.equals("Tuesday")){
+                            boolean isDelete = tuesdayDb.deleteBuilding(building);
+                            if(isDelete == true) {
+                                Toast.makeText(Schedule_Route.this, "Route Deleted", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(Schedule_Route.this, "Route not Deleted", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else if(day.equals("Wednesday")){
+                            boolean isDelete = wednesdayDb.deleteBuilding(building);
+                            if(isDelete == true) {
+                                Toast.makeText(Schedule_Route.this, "Route Deleted", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(Schedule_Route.this, "Route not Deleted", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else if(day.equals("Thursday")){
+                            boolean isDelete = thursdayDb.deleteBuilding(building);
+                            if(isDelete == true) {
+                                Toast.makeText(Schedule_Route.this, "Route Deleted", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(Schedule_Route.this, "Route not Deleted", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else if(day.equals("Friday")){
+                            boolean isDelete = fridayDb.deleteBuilding(building);
+                            if(isDelete == true) {
+                                Toast.makeText(Schedule_Route.this, "Route Deleted", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(Schedule_Route.this, "Route not Deleted", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else if(day.equals("Saturday")){
+                            boolean isDelete = saturdayDb.deleteBuilding(building);
+                            if(isDelete == true) {
+                                Toast.makeText(Schedule_Route.this, "Route Deleted", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                Toast.makeText(Schedule_Route.this, "Route not Deleted", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        else {
+                            Toast.makeText(Schedule_Route.this, "Invalid Day", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+        );
+    }
+
+    public void AddData() {
+        btnAddDay.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Start_Building2);
+                        String b1 = spinner1.getSelectedItem().toString();
+                        Spinner spinner2 = (Spinner) findViewById(R.id.spinner_Dest_Building2);
+                        String b2 = spinner2.getSelectedItem().toString();
+                        Spinner spinner3 = (Spinner) findViewById(R.id.spinner_Days);
+                        String day = spinner3.getSelectedItem().toString();
+                        final String building = b1 + ", " + b2;
+                        final String route = locateRoute(building);
+                        if (day.equals("Sunday")) {
+                            boolean isInserted = sundayDb.insertData(building, route);
+                            if (isInserted == true)
+                                Toast.makeText(Schedule_Route.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(Schedule_Route.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        }
+                        else if (day.equals("Monday")) {
+                            boolean isInserted = mondayDb.insertData(building, route);
+                            if (isInserted == true)
+                                Toast.makeText(Schedule_Route.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(Schedule_Route.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        }
+                        else if (day.equals("Tuesday")) {
+                            boolean isInserted = tuesdayDb.insertData(building, route);
+                            if (isInserted == true)
+                                Toast.makeText(Schedule_Route.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(Schedule_Route.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        }
+                        else if (day.equals("Wednesday")) {
+                            boolean isInserted = wednesdayDb.insertData(building, route);
+                            if (isInserted == true)
+                                Toast.makeText(Schedule_Route.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(Schedule_Route.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        }
+                        else if (day.equals("Thursday")) {
+                            boolean isInserted = thursdayDb.insertData(building, route);
+                            if (isInserted == true)
+                                Toast.makeText(Schedule_Route.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(Schedule_Route.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        }
+                        else if (day.equals("Friday")) {
+                            boolean isInserted = fridayDb.insertData(building, route);
+                            if (isInserted == true)
+                                Toast.makeText(Schedule_Route.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(Schedule_Route.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        }
+                        else if (day.equals("Saturday")) {
+                            boolean isInserted = saturdayDb.insertData(building, route);
+                            if (isInserted == true)
+                                Toast.makeText(Schedule_Route.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(Schedule_Route.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(Schedule_Route.this, "Invalid Day", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+        );
+    }
+
+    public String locateRoute(String building) {
+        Cursor res = routeDb.getAllData();
+        if (res.getCount() == 0) {
+            //show error message
+            showMessage("Error", "Nothing found");
+        }
+        StringBuffer buffer = new StringBuffer();
+        while (res.moveToNext()) {
+            if (res.getString(1).equals(building)) {
+                buffer.append(res.getString(2) + "\n");
+            }
+        }
+        //Return the route
+        return buffer.toString();
+    }
+
+    public void viewDay() {
+        btnViewDay.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Days);
+                        String day = spinner1.getSelectedItem().toString();
+                        Cursor res = getCursor(day);
+                        if(res.getCount() == 0) {
+                            //show error message
+                            showMessage("Error", "No route on " + day);
+                            return;
+                        }
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()){
+                            //buffer.append("Id: "+ res.getString(0) + "\n");
+                            buffer.append("Buildings: "+ res.getString(1) + "\n\n");
+                            buffer.append("Route: "+ res.getString(2) + "\n\n\n");
+                        }
+                        //show table
+                        showMessage(day, buffer.toString());
+                    }
+                }
+        );
+    }
+
+    public Cursor getCursor(String day){
+        Cursor res = null;
+        if (day.equals("Sunday")) {
+            res = sundayDb.getAllData();
+        }
+        else if (day.equals("Monday")){
+            res = mondayDb.getAllData();
+        }
+        else if (day.equals("Tuesday")){
+            res = tuesdayDb.getAllData();
+        }
+        else if (day.equals("Wednesday")){
+            res = wednesdayDb.getAllData();
+        }
+        else if (day.equals("Thursday")){
+            res = thursdayDb.getAllData();
+        }
+        else if (day.equals("Friday")){
+            res = fridayDb.getAllData();
+        }
+        else if (day.equals("Saturday")){
+            res = saturdayDb.getAllData();
+        }
+        else {
+            showMessage("Invalid Day", "Invalid Day");
+        }
+        return res;
+    }
+    /**
+     *
+     * @param title
+     * @param Message
+     */
+    public void showMessage(String title, String Message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(Message);
+        builder.show();
+    }
 }

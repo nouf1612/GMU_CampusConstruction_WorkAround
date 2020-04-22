@@ -112,5 +112,16 @@
         <item>Research Hall</item>
     </string-array>
 
+    <!--The days for the schedule-->
+    <string-array name="Days">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
+
 
 </resources>

@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class RoutesDatabase extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "Route.db";
-    public static final String TABLE_NAME = "route_table";
+public class TuesdayDatabase extends SQLiteOpenHelper {
+    public static final String DATABASE_NAME = "Tuesday.db";
+    public static final String TABLE_NAME = "tuesday_table";
     public static final String COL_1 = "ID";
     public static final String COL_2 = "BUILDINGS";
     public static final String COL_3 = "ROUTE";
@@ -22,7 +22,7 @@ public class RoutesDatabase extends SQLiteOpenHelper {
      *
      * @param context to use for locating paths to the the database
      */
-    public RoutesDatabase(@Nullable Context context) {
+    public TuesdayDatabase(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
     }
@@ -82,17 +82,11 @@ public class RoutesDatabase extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean updateData(String id, String buildings, String route) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1, id);
-        contentValues.put(COL_2, buildings);
-        contentValues.put(COL_3, route);
-        db.update(TABLE_NAME, contentValues, "ID = ?", new String[] { id });
-        return true;
-    }
 
-    public String getDay(){
-        return "Sunday";
+    public boolean deleteBuilding(String building)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, "BUILDINGS = ?", new String[]{ building }) ;
+        return true;
     }
 }
