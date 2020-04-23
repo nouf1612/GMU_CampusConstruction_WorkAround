@@ -132,7 +132,6 @@ public class Quick_Route extends AppCompatActivity {
             }
         });
     }
-
     /**
      * Check if the users choice belongs to List
      *
