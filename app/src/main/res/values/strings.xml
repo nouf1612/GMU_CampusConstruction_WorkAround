@@ -19,6 +19,10 @@
     <string name="Start_Building">Start Building</string>
     <string name="Destination_Building">Destination</string>
     <string name="Get_Route">Get Route</string>
+    <string name="Back">Back</string>
+    <string name="View_day">View Day</string>
+    <string name="Delete_route">Delete Route</string>
+    <string name="Add_route">Add Route</string>
 
 
     <string-array name="names">

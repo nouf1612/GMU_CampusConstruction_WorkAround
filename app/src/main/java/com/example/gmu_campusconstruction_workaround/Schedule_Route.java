@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.renderscript.ScriptC;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,9 @@ public class Schedule_Route extends AppCompatActivity {
     private Button btnAddDay;
     private Button btnViewDay;
     private Button btnDelete;
+    private ArrayAdapter<String> DB_adapter;
+    private Spinner spinner_DB;
+    private String[] UP,LP,MP;
 
 
     @Override
@@ -45,16 +49,56 @@ public class Schedule_Route extends AppCompatActivity {
 
         // Layout for main screen
         Spinner spinner_SB = (Spinner) findViewById(R.id.spinner_Start_Building2);
-        Spinner spinner_DB = (Spinner) findViewById(R.id.spinner_Dest_Building2);
+        spinner_DB = (Spinner) findViewById(R.id.spinner_Dest_Building2);
         Spinner spinner_Days = (Spinner) findViewById(R.id.spinner_Days);
         ArrayAdapter<String> SB_adapter = new ArrayAdapter<String>(Schedule_Route.this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.Start_Buildings));
         spinner_SB.setAdapter(SB_adapter);
-        ArrayAdapter<String> DB_adapter = new ArrayAdapter<String>(Schedule_Route.this,
-                android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.Start_Buildings));
-        spinner_DB.setAdapter(DB_adapter);
+
+
+        // Destination spinner conditions
+        //Set arrays for comparison
+        UP = getResources().getStringArray(R.array.Upper_Part);
+        LP = getResources().getStringArray(R.array.Lower_Part);
+        MP = getResources().getStringArray(R.array.Middle_Part);
+
+
+        // set the conditions for the destination spinner
+        spinner_SB.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String User_Choice = parent.getItemAtPosition(position).toString();
+                // figure out what list the users choice belongs to
+                int list_num = ListNum(User_Choice);
+
+                //set the destination adapter based on the users choice
+                if (list_num==1) {// belongs in the upper part array
+                    DB_adapter = new ArrayAdapter<String>(Schedule_Route.this,
+                            android.R.layout.simple_spinner_item,
+                            getResources().getStringArray((R.array.UP_Dest)));
+                    spinner_DB.setAdapter(DB_adapter);   }
+                else if (list_num==2 || list_num==3) {
+                    DB_adapter = new ArrayAdapter<String>(Schedule_Route.this,
+                            android.R.layout.simple_spinner_item,
+                            getResources().getStringArray((R.array.Upper_Part)));
+                    spinner_DB.setAdapter(DB_adapter);
+                }
+                else {
+                    //show error message
+                    showMessage("Error", "Nothing found");
+                }
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         ArrayAdapter<String> DAYS_adapter = new ArrayAdapter<String>(Schedule_Route.this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.Days));
@@ -322,5 +366,52 @@ public class Schedule_Route extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(Message);
         builder.show();
+    }
+    /**
+     * Check if the users choice belongs to List
+     *
+     * @param UserChoice check if in List
+     * @param List       check if the user choice is in it
+     * @return true if the users choice is in List, false otherwise
+     */
+    private boolean CheckList(String UserChoice, String[] List) {
+        boolean belongs_to_current_list = false;
+        //see if user choice belongs to List
+        for (int i = 0; i < List.length; i++) {
+            if (UserChoice.equals(List[i])) {
+                belongs_to_current_list = true;
+                break;
+            }
+        }
+
+        return belongs_to_current_list;
+    }
+
+    /**
+     * figure out what list the users choice belongs in
+     *
+     * @param UserChoice check which list it belongs to
+     * @return Lists number
+     */
+    private int ListNum(String UserChoice) {
+        int list_num = 0;
+        boolean cond = false;
+        // check which list the users choice belongs in
+        //upper = 1, middle = 2, lower = 3
+        for (int i = 1; i <= 3; i++) {
+            if (i == 1) {
+                cond = CheckList(UserChoice, UP);
+            } else if (i == 2) {
+                cond = CheckList(UserChoice, MP);
+            } else {
+                cond = CheckList(UserChoice, LP);
+            }
+
+            if (cond) {
+                list_num = i;
+                break;
+            }
+        }
+        return list_num;
     }
 }

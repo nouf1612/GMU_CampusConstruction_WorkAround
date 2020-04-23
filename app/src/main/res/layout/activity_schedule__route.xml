@@ -31,7 +31,7 @@
         android:layout_marginStart="161dp"
         android:layout_marginLeft="161dp"
         android:layout_marginBottom="52dp"
-        android:text="Back"
+        android:text="@string/Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -50,7 +50,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginBottom="15dp"
-        android:text="View Day"
+        android:text="@string/View_day"
         app:layout_constraintBottom_toTopOf="@+id/button_Back"
         app:layout_constraintStart_toEndOf="@+id/button_DeleteDay" />
 
@@ -63,7 +63,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="115dp"
-        android:text="Delete Route"
+        android:text="@string/Delete_route"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_ViewDay"
         app:layout_constraintStart_toStartOf="parent" />
@@ -77,7 +77,7 @@
         android:layout_marginEnd="11dp"
         android:layout_marginRight="11dp"
         android:layout_marginBottom="115dp"
-        android:text="Add Route"
+        android:text="@string/Add_route"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_ViewDay" />

@@ -20,10 +20,10 @@ public class Quick_Route extends AppCompatActivity {
     // and the get Route and MainActivity buttons
     private RoutesDatabase routeDb;
     private Spinner spinner_SB, spinner_DB;
-    private Button GRButton,MAButton, buttonRoute;
+    private Button GRButton, MAButton, buttonRoute;
     private String[] UP, LP, MP;
-    private String Building_1,Building_2;
-    private ArrayAdapter<String> SB_adapter,DB_adapter;
+    private String Building_1, Building_2;
+    private ArrayAdapter<String> SB_adapter, DB_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class Quick_Route extends AppCompatActivity {
         MP = getResources().getStringArray(R.array.Middle_Part);
 
 
-
+        // set the conditions for the destination spinner
         spinner_SB.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -59,23 +59,21 @@ public class Quick_Route extends AppCompatActivity {
                 int list_num = ListNum(User_Choice);
 
                 //set the destination adapter based on the users choice
-                if (list_num==1) {// belongs in the upper part array
+                if (list_num == 1) {// belongs in the upper part array
                     DB_adapter = new ArrayAdapter<String>(Quick_Route.this,
                             android.R.layout.simple_spinner_item,
                             getResources().getStringArray((R.array.UP_Dest)));
-                    spinner_DB.setAdapter(DB_adapter);   }
-                else if (list_num==2 || list_num==3) {
+                    spinner_DB.setAdapter(DB_adapter);
+                } else if (list_num == 2 || list_num == 3) {
                     DB_adapter = new ArrayAdapter<String>(Quick_Route.this,
                             android.R.layout.simple_spinner_item,
                             getResources().getStringArray((R.array.Upper_Part)));
                     spinner_DB.setAdapter(DB_adapter);
-                }
-                else {
+                } else {
                     //show error message
                     showMessage("Error", "Nothing found");
-                    }
-                Building_1 = User_Choice;
                 }
+            }
 
 
             @Override
@@ -83,23 +81,14 @@ public class Quick_Route extends AppCompatActivity {
 
             }
         });
-
+        Building_1 = spinner_SB.getSelectedItem().toString();
         // get the users destination choice
-        spinner_DB.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Building_2 = parent.getItemAtPosition(position).toString();
-            }
+        Building_2 = spinner_DB.getSelectedItem().toString();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         ConfigureGRButton();
 
-        //KEVIN EDITS
+
         buttonRoute = (Button) findViewById(R.id.button_GetRoute);
         viewRoute();
         //
@@ -123,7 +112,7 @@ public class Quick_Route extends AppCompatActivity {
     /**
      * configure the get route button
      */
-    private void ConfigureGRButton(){
+    private void ConfigureGRButton() {
         GRButton = (Button) findViewById((R.id.button_GetRoute));
         GRButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +121,7 @@ public class Quick_Route extends AppCompatActivity {
             }
         });
     }
+
     /**
      * Check if the users choice belongs to List
      *
@@ -181,7 +171,6 @@ public class Quick_Route extends AppCompatActivity {
     }
 
     /**
-     *
      * @param title
      * @param Message
      */
@@ -195,8 +184,6 @@ public class Quick_Route extends AppCompatActivity {
 
     /**
      * NOT DONE NEEDS EDITING
-     * @param Building_1
-     * @param Building_2
      */
 
     public void viewRoute() {
@@ -211,13 +198,13 @@ public class Quick_Route extends AppCompatActivity {
                         final String building = building1 + ", " + building2;
 
                         Cursor res = routeDb.getAllData();
-                        if(res.getCount() == 0) {
+                        if (res.getCount() == 0) {
                             //show error message
                             showMessage("Error", "Nothing found");
                         }
                         StringBuffer buffer = new StringBuffer();
-                        while(res.moveToNext()) {
-                            if(res.getString(1).equals(building)) {
+                        while (res.moveToNext()) {
+                            if (res.getString(1).equals(building)) {
                                 buffer.append(res.getString(2) + "\n");
                             }
                         }
@@ -227,163 +214,4 @@ public class Quick_Route extends AppCompatActivity {
                 }
         );
     }
-
-/*    public void viewRoute(String Building_1, String Building_2) {
-        Cursor res = routeDb.getAllData();
-        String route = "none";
-        if(res.getCount() == 0) {
-                //show error message
-                showMessage("Error", "Nothing found");
-            }
-            StringBuffer buffer = new StringBuffer();
-            while(res.moveToNext()) {
-                if(res.getString(1).equals(building)) {
-                    buffer.append(res.getString(2) + "\n");
-                }
-            }
-            //show table
-            showMessage("Here! Follow this route.", buffer.toString());
-        }*/
-
-
-
 }
-
-    /* Old Layout by kevin
-
-    private RoutesDatabase routeDb;
-    private Button buttonDatabase;
-    private Button buttonRoute;
-    private Button btnViewTest;
-    // private Button buttonQR
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        routeDb = new RoutesDatabase(this);
-
-        buttonDatabase = (Button) findViewById(R.id.button_Database);
-        btnViewTest = (Button) findViewById(R.id.button_ViewTest);
-
-        viewAll();
-
-        buttonDatabase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDatabaseConfig();
-            }
-        });
-        //Testing layout start
-        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Building1);
-        Spinner spinner2 = (Spinner) findViewById(R.id.spinner_Building2);
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.names));
-        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(myAdapter);
-        spinner2.setAdapter(myAdapter);
-
-        buttonRoute = (Button) findViewById(R.id.button_Route);
-        viewRoute();
-        //Testing Layout end
-        //Quick Route Layout
-        Spinner Spinner_SB = (Spinner) findViewById(R.id.spinner_Start_Building);
-        Spinner Spinner_DB = (Spinner) findViewById(R.id.spinner_Dest_Building);
-        ArrayAdapter<String> SB_adapter =
-    }
-
-    public void openDatabaseConfig() {
-        Intent intent = new Intent(this, DatabaseActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void viewRoute() {
-        buttonRoute.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Building1);
-                        String building1 = spinner1.getSelectedItem().toString();
-                        Spinner spinner2 = (Spinner) findViewById(R.id.spinner_Building2);
-                        String building2 = spinner2.getSelectedItem().toString();
-                        final String building = building1 + ", " + building2;
-
-                        Cursor res = routeDb.getAllData();
-                        String route = "none";
-                        if(res.getCount() == 0) {
-                            //show error message
-                            showMessage("Error", "Nothing found");
-                        }
-                        StringBuffer buffer = new StringBuffer();
-                        while(res.moveToNext()) {
-                            if(res.getString(1).equals(building)) {
-                                buffer.append(res.getString(2) + "\n");
-                            }
-                        }
-                        //show table
-                        showMessage("Here! Follow this route.", buffer.toString());
-                    }
-                }
-        );
-    }
-
-    public void viewAll() {
-        btnViewTest.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Cursor res = routeDb.getAllData();
-                        if(res.getCount() == 0) {
-                            //show error message
-                            showMessage("Error", "Nothing found");
-                            return;
-                        }
-                        StringBuffer buffer = new StringBuffer();
-                        while(res.moveToNext()){
-                            buffer.append("Id: "+ res.getString(0) + "\n");
-                            buffer.append("Buildings: "+ res.getString(1) + "\n");
-                            buffer.append("Route: "+ res.getString(2) + "\n\n");
-                        }
-                        //show table
-                        showMessage("Data", buffer.toString());
-                    }
-                }
-        );
-    }
-
-
-}*/
