@@ -17,7 +17,7 @@ public class Favorite_List extends AppCompatActivity {
 
     private RoutesDatabase routesDb;
     private FavoritesDatabase favoritesDb;
-    private Button button_deleteFav,button_addFav,button_View;
+    private Button button_deleteFav,button_addFav,button_View,button_clear;
     private String[] UP, LP, MP;
     private ArrayAdapter<String>  DB_adapter;
     private Spinner spinner_DB;
@@ -82,12 +82,14 @@ public class Favorite_List extends AppCompatActivity {
         button_addFav = (Button) findViewById(R.id.button_addFav);
         button_deleteFav = (Button) findViewById(R.id.button_deleteFav);
         button_View = (Button) findViewById(R.id.button_View);
+        button_clear = (Button) findViewById(R.id.button_clear);
 
         //Calls methods in class
         ConfigureMAButton();
         InsertData();
         RemoveData();
         ViewAll();
+        ClearAll();
     }
 
     /**
@@ -159,7 +161,7 @@ public class Favorite_List extends AppCompatActivity {
                         Cursor res = favoritesDb.readAllData();
                         if (res.getCount() == 0) {
                             //show error message
-                            showMessage("Error", "No route");
+                            showMessage("No Routes", "Favorites list is empty");
                             return;
                         }
                         StringBuffer buffer = new StringBuffer();
@@ -170,6 +172,31 @@ public class Favorite_List extends AppCompatActivity {
                         }
                         //show table
                         showMessage("Favorites", buffer.toString());
+                    }
+                }
+        );
+    }
+
+    /**
+     * configure the button that will clear
+     * all of the routes from the specified day
+     */
+    public void ClearAll() {
+        button_clear.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res = favoritesDb.readAllData();
+                        if (res.getCount() == 0) {
+                            //show error message
+                            showMessage("Error", "Favorites is already empty");
+                            return;
+                        }
+                        while (res.moveToNext()) {
+                            favoritesDb.deleteID(res.getString(0));
+                        }
+                        //show table
+                        showMessage("Clear List","Favorites has been cleared.");
                     }
                 }
         );

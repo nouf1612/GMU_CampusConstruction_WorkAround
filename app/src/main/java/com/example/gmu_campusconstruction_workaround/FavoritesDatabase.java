@@ -89,4 +89,10 @@ public class FavoritesDatabase extends SQLiteOpenHelper {
         return res;
     }
 
+    public void deleteID(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, "ID = ?", new String[]{ id }) ;
+    }
+
 }
