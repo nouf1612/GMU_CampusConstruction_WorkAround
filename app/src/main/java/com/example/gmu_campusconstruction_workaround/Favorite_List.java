@@ -1,11 +1,10 @@
 package com.example.gmu_campusconstruction_workaround;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -19,6 +18,9 @@ public class Favorite_List extends AppCompatActivity {
     private RoutesDatabase routesDb;
     private FavoritesDatabase favoritesDb;
     private Button button_deleteFav,button_addFav,button_View;
+    private String[] UP, LP, MP;
+    private ArrayAdapter<String>  DB_adapter;
+    private Spinner spinner_DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +33,51 @@ public class Favorite_List extends AppCompatActivity {
 
         // Layout for main screen
         Spinner spinner_SB = (Spinner) findViewById(R.id.spinner_Start_Building);
-        Spinner spinner_DB = (Spinner) findViewById(R.id.spinner_Dest_Building);
+        spinner_DB = (Spinner) findViewById(R.id.spinner_Dest_Building);
         ArrayAdapter<String> SB_adapter = new ArrayAdapter<String>(Favorite_List.this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.Start_Buildings));
         spinner_SB.setAdapter(SB_adapter);
-        ArrayAdapter<String> DB_adapter = new ArrayAdapter<String>(Favorite_List.this,
-                android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.Start_Buildings));
-        spinner_DB.setAdapter(DB_adapter);
+
+        // Destination spinner conditions
+        //Set arrays for comparison
+        UP = getResources().getStringArray(R.array.Upper_Part);
+        LP = getResources().getStringArray(R.array.Lower_Part);
+        MP = getResources().getStringArray(R.array.Middle_Part);
+
+
+        // set the conditions for the destination spinner
+        spinner_SB.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String User_Choice = parent.getItemAtPosition(position).toString();
+                // figure out what list the users choice belongs to
+                int list_num = ListNum(User_Choice);
+
+                //set the destination adapter based on the users choice
+                if (list_num == 1) {// belongs in the upper part array
+                    DB_adapter = new ArrayAdapter<>(Favorite_List.this,
+                            android.R.layout.simple_spinner_item,
+                            getResources().getStringArray((R.array.UP_Dest)));
+                    spinner_DB.setAdapter(DB_adapter);
+                } else if (list_num == 2 || list_num == 3) {
+                    DB_adapter = new ArrayAdapter<>(Favorite_List.this,
+                            android.R.layout.simple_spinner_item,
+                            getResources().getStringArray((R.array.Upper_Part)));
+                    spinner_DB.setAdapter(DB_adapter);
+                } else {
+                    //show error message
+                    showMessage("Error", "Nothing found");
+                }
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         button_addFav = (Button) findViewById(R.id.button_addFav);
         button_deleteFav = (Button) findViewById(R.id.button_deleteFav);
@@ -164,5 +202,52 @@ public class Favorite_List extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(Message);
         builder.show();
+    }
+    /**
+     * Check if the users choice belongs to List
+     *
+     * @param UserChoice check if in List
+     * @param List       check if the user choice is in it
+     * @return true if the users choice is in List, false otherwise
+     */
+    private boolean CheckList(String UserChoice, String[] List) {
+        boolean belongs_to_current_list = false;
+        //see if user choice belongs to List
+        for (String s : List) {
+            if (UserChoice.equals(s)) {
+                belongs_to_current_list = true;
+                break;
+            }
+        }
+
+        return belongs_to_current_list;
+    }
+
+    /**
+     * figure out what list the users choice belongs in
+     *
+     * @param UserChoice check which list it belongs to
+     * @return Lists number
+     */
+    private int ListNum(String UserChoice) {
+        int list_num = 0;
+        boolean cond = false;
+        // check which list the users choice belongs in
+        //upper = 1, middle = 2, lower = 3
+        for (int i = 1; i <= 3; i++) {
+            if (i == 1) {
+                cond = CheckList(UserChoice, UP);
+            } else if (i == 2) {
+                cond = CheckList(UserChoice, MP);
+            } else {
+                cond = CheckList(UserChoice, LP);
+            }
+
+            if (cond) {
+                list_num = i;
+                break;
+            }
+        }
+        return list_num;
     }
 }
