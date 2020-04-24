@@ -89,4 +89,10 @@ public class ThursdayDatabase extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, "BUILDINGS = ?", new String[]{ building }) ;
         return true;
     }
+
+    public void deleteID(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, "ID = ?", new String[]{ id }) ;
+    }
 }

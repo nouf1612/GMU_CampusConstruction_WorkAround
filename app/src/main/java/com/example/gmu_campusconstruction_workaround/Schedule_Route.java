@@ -26,6 +26,7 @@ public class Schedule_Route extends AppCompatActivity {
     private Button btnAddDay;
     private Button btnViewDay;
     private Button btnDelete;
+    private Button btnClear;
     private ArrayAdapter<String> DB_adapter;
     private Spinner spinner_DB;
     private String[] UP,LP,MP;
@@ -107,12 +108,14 @@ public class Schedule_Route extends AppCompatActivity {
         btnAddDay = (Button) findViewById(R.id.button_AddDay);
         btnViewDay = (Button) findViewById(R.id.button_ViewDay);
         btnDelete = (Button) findViewById(R.id.button_DeleteDay);
+        btnClear = (Button) findViewById(R.id.button_ClearDay);
 
         //Calling methods
         ConfigureMAButton();
         AddData();
         DeleteData();
         viewDay();
+        ClearData();
     }
 
 
@@ -131,6 +134,10 @@ public class Schedule_Route extends AppCompatActivity {
         });
     }
 
+    /**
+     * configure the button that will delete
+     * a route from the specified day selected from the spinners
+     */
     public void DeleteData() {
         btnDelete.setOnClickListener(
                 new View.OnClickListener() {
@@ -144,6 +151,7 @@ public class Schedule_Route extends AppCompatActivity {
                         String day = spinner3.getSelectedItem().toString();
                         final String building = b1 + ", " + b2;
 
+                        //Look for the right day and remove the route based on the two buildings.
                         if (day.equals("Sunday")){
                             boolean isDelete = sundayDb.deleteBuilding(building);
                             if(isDelete == true) {
@@ -215,6 +223,116 @@ public class Schedule_Route extends AppCompatActivity {
         );
     }
 
+    /**
+     * configure the button that will clear
+     * all of the routes from the specified day
+     */
+    public void ClearData() {
+        btnClear.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Spinner spinner3 = (Spinner) findViewById(R.id.spinner_Days);
+                        String day = spinner3.getSelectedItem().toString();
+                        Cursor res = getCursor(day);
+
+                        //Look for the right day and remove all of the routes.
+                        if (day.equals("Sunday")){
+                            if(res.getCount() == 0) {
+                                //show error message
+                                showMessage("Error", "No schedule in " + day + ".");
+                                return;
+                            }
+                            while(res.moveToNext()){
+                                sundayDb.deleteID(res.getString(0));
+                            }
+                            //show table
+                            showMessage("Clear Day", day + " has been cleared.");
+                        }
+                        else if (day.equals("Monday")){
+                            if(res.getCount() == 0) {
+                                //show error message
+                                showMessage("Error", "No schedule in " + day + ".");
+                                return;
+                            }
+                            while(res.moveToNext()){
+                                mondayDb.deleteID(res.getString(0));
+                            }
+                            //show table
+                            showMessage("Clear Day", day + " has been cleared.");
+                        }
+                        else if (day.equals("Tuesday")){
+                            if(res.getCount() == 0) {
+                                //show error message
+                                showMessage("Error", "No schedule in " + day + ".");
+                                return;
+                            }
+                            while(res.moveToNext()){
+                                tuesdayDb.deleteID(res.getString(0));
+                            }
+                            //show table
+                            showMessage("Clear Day", day + " has been cleared.");
+                        }
+                        else if (day.equals("Wednesday")){
+                            if(res.getCount() == 0) {
+                                //show error message
+                                showMessage("Error", "No schedule in " + day + ".");
+                                return;
+                            }
+                            while(res.moveToNext()){
+                                wednesdayDb.deleteID(res.getString(0));
+                            }
+                            //show table
+                            showMessage("Clear Day", day + " has been cleared.");
+                        }
+                        else if (day.equals("Thursday")){
+                            if(res.getCount() == 0) {
+                                //show error message
+                                showMessage("Error", "No schedule in " + day + ".");
+                                return;
+                            }
+                            while(res.moveToNext()){
+                                thursdayDb.deleteID(res.getString(0));
+                            }
+                            //show table
+                            showMessage("Clear Day", day + " has been cleared.");
+                        }
+                        else if (day.equals("Friday")){
+                            if(res.getCount() == 0) {
+                                //show error message
+                                showMessage("Error", "No schedule in " + day + ".");
+                                return;
+                            }
+                            while(res.moveToNext()){
+                                fridayDb.deleteID(res.getString(0));
+                            }
+                            //show table
+                            showMessage("Clear Day", day + " has been cleared.");
+                        }
+                        else if (day.equals("Saturday")){
+                            if(res.getCount() == 0) {
+                                //show error message
+                                showMessage("Error", "No schedule in " + day + ".");
+                                return;
+                            }
+                            while(res.moveToNext()){
+                                saturdayDb.deleteID(res.getString(0));
+                            }
+                            //show table
+                            showMessage("Clear Day", day + " has been cleared.");
+                        }
+                        else {
+                            showMessage("Error", "Invalid Day");
+                        }
+                    }
+                }
+        );
+    }
+
+    /**
+     * configure the button that will add
+     * a the buildings and route to the specified day
+     */
     public void AddData() {
         btnAddDay.setOnClickListener(
                 new View.OnClickListener() {
@@ -228,6 +346,8 @@ public class Schedule_Route extends AppCompatActivity {
                         String day = spinner3.getSelectedItem().toString();
                         final String building = b1 + ", " + b2;
                         final String route = locateRoute(building);
+
+                        //Look for the right day, and add the buildings and route.
                         if (day.equals("Sunday")) {
                             boolean isInserted = sundayDb.insertData(building, route);
                             if (isInserted == true)
@@ -285,12 +405,18 @@ public class Schedule_Route extends AppCompatActivity {
         );
     }
 
+    /**
+     * a helper method that will locate
+     * the route specified by the two buildings
+     * @param building String of the two buildings in the format "building1, building2"
+     */
     public String locateRoute(String building) {
         Cursor res = routeDb.getAllData();
         if (res.getCount() == 0) {
             //show error message
             showMessage("Error", "Nothing found");
         }
+        //traverse through the routeDb database to find the route of the specified buildings
         StringBuffer buffer = new StringBuffer();
         while (res.moveToNext()) {
             if (res.getString(1).equals(building)) {
