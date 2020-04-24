@@ -1,18 +1,15 @@
 package com.example.gmu_campusconstruction_workaround;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Quick_Route extends AppCompatActivity {
 
@@ -22,7 +19,6 @@ public class Quick_Route extends AppCompatActivity {
     private Spinner spinner_SB, spinner_DB;
     private Button GRButton, MAButton, buttonRoute;
     private String[] UP, LP, MP;
-    private String Building_1, Building_2;
     private ArrayAdapter<String> SB_adapter, DB_adapter;
 
     @Override
@@ -37,7 +33,7 @@ public class Quick_Route extends AppCompatActivity {
         // spinners for the start and destination lists
         spinner_SB = (Spinner) findViewById(R.id.spinner_Start_Building);
         spinner_DB = (Spinner) findViewById(R.id.spinner_Dest_Building);
-        SB_adapter = new ArrayAdapter<String>(Quick_Route.this,
+        SB_adapter = new ArrayAdapter<>(Quick_Route.this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.Start_Buildings));
         spinner_SB.setAdapter(SB_adapter);
@@ -60,12 +56,12 @@ public class Quick_Route extends AppCompatActivity {
 
                 //set the destination adapter based on the users choice
                 if (list_num == 1) {// belongs in the upper part array
-                    DB_adapter = new ArrayAdapter<String>(Quick_Route.this,
+                    DB_adapter = new ArrayAdapter<>(Quick_Route.this,
                             android.R.layout.simple_spinner_item,
                             getResources().getStringArray((R.array.UP_Dest)));
                     spinner_DB.setAdapter(DB_adapter);
                 } else if (list_num == 2 || list_num == 3) {
-                    DB_adapter = new ArrayAdapter<String>(Quick_Route.this,
+                    DB_adapter = new ArrayAdapter<>(Quick_Route.this,
                             android.R.layout.simple_spinner_item,
                             getResources().getStringArray((R.array.Upper_Part)));
                     spinner_DB.setAdapter(DB_adapter);
@@ -81,15 +77,11 @@ public class Quick_Route extends AppCompatActivity {
 
             }
         });
-        Building_1 = spinner_SB.getSelectedItem().toString();
-        // get the users destination choice
-        Building_2 = spinner_DB.getSelectedItem().toString();
-
 
         ConfigureGRButton();
 
 
-        buttonRoute = (Button) findViewById(R.id.button_GetRoute);
+        buttonRoute = findViewById(R.id.button_GetRoute);
         viewRoute();
         //
     }
@@ -100,7 +92,7 @@ public class Quick_Route extends AppCompatActivity {
      * back to Main activity
      */
     private void ConfigureMAButton() {
-        MAButton = (Button) findViewById(R.id.button_GoToMA);
+        MAButton = findViewById(R.id.button_GoToMA);
         MAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +105,7 @@ public class Quick_Route extends AppCompatActivity {
      * configure the get route button
      */
     private void ConfigureGRButton() {
-        GRButton = (Button) findViewById((R.id.button_GetRoute));
+        GRButton = findViewById((R.id.button_GetRoute));
         GRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,8 +124,8 @@ public class Quick_Route extends AppCompatActivity {
     private boolean CheckList(String UserChoice, String[] List) {
         boolean belongs_to_current_list = false;
         //see if user choice belongs to List
-        for (int i = 0; i < List.length; i++) {
-            if (UserChoice.equals(List[i])) {
+        for (String s : List) {
+            if (UserChoice.equals(s)) {
                 belongs_to_current_list = true;
                 break;
             }
