@@ -25,28 +25,7 @@
     <string name="Add_route">Add Route</string>
 
 
-    <string-array name="names">
-        <item>Aquia Building</item>
-        <item>Art and Design Building</item>
-        <item>David King Hall</item>
-        <item>East Building</item>
-        <item>Enterprise Hall</item>
-        <item>Exploratory Hall</item>
-        <item>Innovation Hall</item>
-        <item>Johnson Center</item>
-        <item>Krug Hall</item>
-        <item>Lecture Hall</item>
-        <item>Mason Hall</item>
-        <item>Music/Theater Building</item>
-        <item>Nguyen Engineering Building</item>
-        <item>Planetary Hall</item>
-        <item>Research Hall</item>
-        <item>Robinson Hall B</item>
-        <item>SUB 1</item>
-        <item>The HUB</item>
-        <item>Thompson Hall</item>
-        <item>West Building</item>
-    </string-array>
+
 
     <!--the the list for the Start Spinner-->
     <string-array name="Start_Buildings">
