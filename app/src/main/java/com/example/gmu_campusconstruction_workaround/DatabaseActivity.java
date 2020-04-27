@@ -37,14 +37,21 @@ public class DatabaseActivity extends AppCompatActivity {
         viewAll();
         UpdateData();
 
-        buttonBack = (Button) findViewById(R.id.button_Back);
+
+        ConfigureBB();
+    }
+
+    private void ConfigureBB() {
+        buttonBack = findViewById(R.id.button_Back);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                openMainActivity();
+            public void onClick(View view) {
+                finish();
             }
         });
+
     }
+
     public void UpdateData() {
         btnUpdate.setOnClickListener(
                 new View.OnClickListener() {

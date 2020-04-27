@@ -1,18 +1,16 @@
 package com.example.gmu_campusconstruction_workaround;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.renderscript.ScriptC;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Schedule_Route extends AppCompatActivity {
     private RoutesDatabase routeDb;
@@ -71,24 +69,30 @@ public class Schedule_Route extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String User_Choice = parent.getItemAtPosition(position).toString();
                 // figure out what list the users choice belongs to
-                int list_num = ListNum(User_Choice);
-
-                //set the destination adapter based on the users choice
-                if (list_num==1) {// belongs in the upper part array
-                    DB_adapter = new ArrayAdapter<String>(Schedule_Route.this,
+                if(User_Choice.equals("Johnson Center")){
+                    DB_adapter = new ArrayAdapter<>(Schedule_Route.this,
                             android.R.layout.simple_spinner_item,
-                            getResources().getStringArray((R.array.UP_Dest)));
-                    spinner_DB.setAdapter(DB_adapter);   }
-                else if (list_num==2 || list_num==3) {
-                    DB_adapter = new ArrayAdapter<String>(Schedule_Route.this,
-                            android.R.layout.simple_spinner_item,
-                            getResources().getStringArray((R.array.Upper_Part)));
+                            getResources().getStringArray((R.array.JC_Dest)));
                     spinner_DB.setAdapter(DB_adapter);
                 }
-                else {
-                    //show error message
-                    showMessage("Error", "Nothing found");
-                }
+                else{
+                    int list_num = ListNum(User_Choice);
+
+                    //set the destination adapter based on the users choice
+                    if (list_num == 1) {// belongs in the upper part array
+                        DB_adapter = new ArrayAdapter<>(Schedule_Route.this,
+                                android.R.layout.simple_spinner_item,
+                                getResources().getStringArray((R.array.UP_Dest)));
+                        spinner_DB.setAdapter(DB_adapter);
+                    } else if (list_num == 2 || list_num == 3) {
+                        DB_adapter = new ArrayAdapter<>(Schedule_Route.this,
+                                android.R.layout.simple_spinner_item,
+                                getResources().getStringArray((R.array.Upper_Part)));
+                        spinner_DB.setAdapter(DB_adapter);
+                    } else {
+                        //show error message
+                        showMessage("Error", "Nothing found");
+                    }}
 
             }
 

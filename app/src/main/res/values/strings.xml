@@ -1,12 +1,9 @@
 <resources>
     <string name="app_name">GMU_CampusConstruction_WorkAround</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="Delete">X</string>
+    <string name="Delete">Delete</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -23,6 +20,10 @@
     <string name="View_day">View Day</string>
     <string name="Delete_route">Delete Route</string>
     <string name="Add_route">Add Route</string>
+    <string name="Add">Add</string>
+    <string name="view_all">View All</string>
+    <string name="clear_all">Clear All</string>
+    <string name="configure">Configure</string>
 
 
 
@@ -36,6 +37,7 @@
         <item>Enterprise Hall</item>
         <item>Exploratory Hall</item>
         <item>Innovation Hall</item>
+        <item>Johnson Center</item>
         <item>Krug Hall</item>
         <item>Lecture Hall</item>
         <item>Mason Hall</item>
@@ -93,6 +95,18 @@
         <item>Nguyen Engineering Building</item>
         <item>Planetary Hall</item>
         <item>Research Hall</item>
+    </string-array>
+
+    <!--Destination array for the JC-->
+    <string-array name="JC_Dest">
+        <item>East Building</item>
+        <item>Enterprise Hall</item>
+        <item>Exploratory Hall</item>
+        <item>Krug Hall</item>
+        <item>Lecture Hall</item>
+        <item>Nguyen Engineering Building</item>
+        <item>Research Hall</item>
+        <item>West Building</item>
     </string-array>
 
     <!--The days for the schedule-->
