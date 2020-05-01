@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Favorite_List extends AppCompatActivity {
 
-    private RoutesDatabase routesDb;
+    private RoutesDB_Access routesDBA;
     private FavoritesDatabase favoritesDb;
     private Button button_deleteFav,button_addFav,button_View,button_clear;
     private String[] UP, LP, MP;
@@ -28,7 +28,8 @@ public class Favorite_List extends AppCompatActivity {
         setContentView(R.layout.activity_favorite_list);
 
         //Database initialized
-        routesDb = new RoutesDatabase(this);
+        routesDBA = RoutesDB_Access.getInstance(getApplicationContext());
+        routesDBA.open();
         favoritesDb = new FavoritesDatabase(this);
 
         // Layout for main screen
@@ -210,7 +211,7 @@ public class Favorite_List extends AppCompatActivity {
     }
 
     public String locateRoute(String building) {
-        Cursor res = routesDb.getAllData();
+        Cursor res = routesDBA.getAllData();
         if (res.getCount() == 0) {
             //show error message
             showMessage("Error", "Nothing found");

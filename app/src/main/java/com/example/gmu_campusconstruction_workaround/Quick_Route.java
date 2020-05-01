@@ -15,10 +15,11 @@ public class Quick_Route extends AppCompatActivity {
 
     //variables for the route database, list spinners and their adapters,
     // and the get Route and MainActivity buttons
-    private RoutesDatabase routeDb;
+    private RoutesDB_Access routesDBA;
     private Spinner spinner_SB, spinner_DB;
-    private Button GRButton, MAButton, buttonRoute;
+    private Button GRButton, MAButton;
     private String[] UP, LP, MP;
+    private String Building1, Building2;
     private ArrayAdapter<String> SB_adapter, DB_adapter;
 
     @Override
@@ -26,7 +27,8 @@ public class Quick_Route extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick__route);
 
-        routeDb = new RoutesDatabase(this);
+        routesDBA = RoutesDB_Access.getInstance(getApplicationContext());
+        routesDBA.open();
         ConfigureMAButton();
 
 
@@ -77,6 +79,8 @@ public class Quick_Route extends AppCompatActivity {
                         //show error message
                         showMessage("Error", "Nothing found");
                     }}
+                Building1 = User_Choice;
+                Building2 = spinner_DB.getSelectedItem().toString();
             }
 
 
@@ -89,9 +93,6 @@ public class Quick_Route extends AppCompatActivity {
         ConfigureGRButton();
 
 
-        buttonRoute = findViewById(R.id.button_GetRoute);
-        viewRoute();
-        //
     }
 
 
@@ -117,7 +118,9 @@ public class Quick_Route extends AppCompatActivity {
         GRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //viewRoute();
+
+                viewRoute();
+
             }
         });
     }
@@ -183,35 +186,22 @@ public class Quick_Route extends AppCompatActivity {
     }
 
     /**
-     * NOT DONE NEEDS EDITING
+     * Create an instance of the database
+     * Get and view the route from it
      */
 
     public void viewRoute() {
-        buttonRoute.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Spinner spinner1 = (Spinner) findViewById(R.id.spinner_Start_Building);
-                        String building1 = spinner1.getSelectedItem().toString();
-                        Spinner spinner2 = (Spinner) findViewById(R.id.spinner_Dest_Building);
-                        String building2 = spinner2.getSelectedItem().toString();
-                        final String building = building1 + ", " + building2;
 
-                        Cursor res = routeDb.getAllData();
-                        if (res.getCount() == 0) {
-                            //show error message
-                            showMessage("Error", "Nothing found");
-                        }
-                        StringBuffer buffer = new StringBuffer();
-                        while (res.moveToNext()) {
-                            if (res.getString(1).equals(building)) {
-                                buffer.append(res.getString(2) + "\n");
-                            }
-                        }
-                        //show table
-                        showMessage("Here! Follow this route.", buffer.toString());
-                    }
-                }
-        );
+        Cursor res = routesDBA.getAllData();
+        if (res.getCount() == 0) { // check if the database is empty
+            //show error message
+            showMessage("Error", "Nothing found");
+        }
+        // get the route
+        final String Buidlings = Building1 + ", " + Building2;
+        String route = routesDBA.getRoute(Buidlings);
+        showMessage("Here! Follow this route.", route);
+
     }
+
 }

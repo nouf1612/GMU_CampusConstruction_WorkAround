@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+/**
+ * create the route database
+ */
 public class RoutesDatabase extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Route.db";
     public static final String TABLE_NAME = "route_table";

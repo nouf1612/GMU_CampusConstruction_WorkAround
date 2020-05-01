@@ -13,7 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Schedule_Route extends AppCompatActivity {
-    private RoutesDatabase routeDb;
+
+    private RoutesDB_Access routesDBA;
     private SundayDatabase sundayDb;
     private MondayDatabase mondayDb;
     private TuesdayDatabase tuesdayDb;
@@ -44,7 +45,8 @@ public class Schedule_Route extends AppCompatActivity {
         thursdayDb = new ThursdayDatabase(this);
         fridayDb = new FridayDatabase(this);
         saturdayDb = new SaturdayDatabase(this);
-        routeDb = new RoutesDatabase(this);
+        routesDBA = RoutesDB_Access.getInstance(getApplicationContext());
+        routesDBA.open();
 
         // Layout for main screen
         Spinner spinner_SB = (Spinner) findViewById(R.id.spinner_Start_Building2);
@@ -415,7 +417,7 @@ public class Schedule_Route extends AppCompatActivity {
      * @param building String of the two buildings in the format "building1, building2"
      */
     public String locateRoute(String building) {
-        Cursor res = routeDb.getAllData();
+        Cursor res = routesDBA.getAllData();
         if (res.getCount() == 0) {
             //show error message
             showMessage("Error", "Nothing found");
