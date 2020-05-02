@@ -16,11 +16,10 @@ public class Quick_Route extends AppCompatActivity {
     //variables for the route database, list spinners and their adapters,
     // and the get Route and MainActivity buttons
     private RoutesDB_Access routesDBA;
-    private Spinner spinner_SB, spinner_DB;
-    private Button GRButton, MAButton;
+    private Spinner spinner_DB;
     private String[] UP, LP, MP;
     private String Building1, Building2;
-    private ArrayAdapter<String> SB_adapter, DB_adapter;
+    private ArrayAdapter<String> DB_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +32,9 @@ public class Quick_Route extends AppCompatActivity {
 
 
         // spinners for the start and destination lists
-        spinner_SB = (Spinner) findViewById(R.id.spinner_Start_Building);
-        spinner_DB = (Spinner) findViewById(R.id.spinner_Dest_Building);
-        SB_adapter = new ArrayAdapter<>(Quick_Route.this,
+        Spinner spinner_SB = findViewById(R.id.spinner_Start_Building);
+        spinner_DB = findViewById(R.id.spinner_Dest_Building);
+        ArrayAdapter<String> SB_adapter = new ArrayAdapter<>(Quick_Route.this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.Start_Buildings));
         spinner_SB.setAdapter(SB_adapter);
@@ -101,7 +100,7 @@ public class Quick_Route extends AppCompatActivity {
      * back to Main activity
      */
     private void ConfigureMAButton() {
-        MAButton = findViewById(R.id.button_GoToMA);
+        Button MAButton = findViewById(R.id.button_GoToMA);
         MAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +113,7 @@ public class Quick_Route extends AppCompatActivity {
      * configure the get route button
      */
     private void ConfigureGRButton() {
-        GRButton = findViewById((R.id.button_GetRoute));
+        Button GRButton = findViewById((R.id.button_GetRoute));
         GRButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

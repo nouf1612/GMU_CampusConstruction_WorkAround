@@ -13,7 +13,7 @@
     <Spinner
         android:id="@+id/spinner_Start_Building"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="142dp"
         android:layout_marginBottom="248dp"
         android:entries="@array/Start_Buildings"
@@ -42,7 +42,7 @@
     <Spinner
         android:id="@+id/spinner_Dest_Building"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginTop="289dp"

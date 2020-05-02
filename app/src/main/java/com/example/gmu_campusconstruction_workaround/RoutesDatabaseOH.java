@@ -8,7 +8,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
  * Helper class to open Routes database
  */
 public class RoutesDatabaseOH extends SQLiteAssetHelper {
-    private static final String Routes_Databases = "Route.db";
+    private static final String Routes_Databases = "Routes.db";
     private static final int RoutesDB_version = 1;
 
     public RoutesDatabaseOH(Context context){
