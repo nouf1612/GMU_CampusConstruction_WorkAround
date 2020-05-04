@@ -86,7 +86,7 @@ public class Favorite_List extends AppCompatActivity {
             }
         });
 
-
+        // Initializing button variables
         button_addFav = (Button) findViewById(R.id.button_addFav);
         button_deleteFav = (Button) findViewById(R.id.button_deleteFav);
         button_View = (Button) findViewById(R.id.button_View);
@@ -117,7 +117,6 @@ public class Favorite_List extends AppCompatActivity {
     /**
      * Inserts data from spinners into database
      * once button is pressed
-     *
      */
     private void InsertData() {
         button_addFav.setOnClickListener(
@@ -130,17 +129,26 @@ public class Favorite_List extends AppCompatActivity {
                         String b2 = spinner2.getSelectedItem().toString();
                         final String building = b1 + ", " + b2;
                         final String route = locateRoute(building);
-                        boolean isInserted = favoritesDb.insertRoute(building, route);
-                        if (isInserted == true)
-                            Toast.makeText(Favorite_List.this, "Data Inserted", Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(Favorite_List.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        Cursor res = favoritesDb.readAllData();
+                        if (res.getCount() < 20) {
+                            boolean isInserted = favoritesDb.insertRoute(building, route);
+                            if (isInserted == true)
+                                Toast.makeText(Favorite_List.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(Favorite_List.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(Favorite_List.this, "Favorites list is full", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
         );
     }
 
-
+    /**
+     * Removes the route from the favorites database
+     * and prompts a message of confirmation
+     * once button is pressed
+     */
     public void RemoveData() {
         button_deleteFav.setOnClickListener(
                 new View.OnClickListener() {
@@ -161,6 +169,11 @@ public class Favorite_List extends AppCompatActivity {
         );
     }
 
+    /**
+     * Views all routes in the database
+     * once button is pressed
+     * Error message if database is empty
+     */
     public void ViewAll(){
         button_View.setOnClickListener(
                 new View.OnClickListener() {
@@ -186,8 +199,9 @@ public class Favorite_List extends AppCompatActivity {
     }
 
     /**
-     * configure the button that will clear
-     * all of the routes from the specified day
+     * Clears all routes from the database
+     * once button is pressed
+     * Error if database is already empty
      */
     public void ClearAll() {
         button_clear.setOnClickListener(
@@ -210,6 +224,10 @@ public class Favorite_List extends AppCompatActivity {
         );
     }
 
+    /**
+     * Locates route from main database to be added
+     * once button is pressed
+     */
     public String locateRoute(String building) {
         Cursor res = routesDBA.getAllData();
         if (res.getCount() == 0) {
